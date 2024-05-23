@@ -18,12 +18,25 @@ class App extends Component {
     };
   }
 
+  // Method to add a selected song from search results to playlist
+  addTrackToPlaylist = (track) => {
+    // Check if the track is already in the playlist
+    const isTrackInPlaylist = this.state.playlistTracks.some((playlistTrack) => playlistTrack.id === track.id);
+    
+    // If the track is not already in the playlist, add it
+    if (!isTrackInPlaylist) {
+      this.setState((prevState) => ({
+        playlistTracks: [...prevState.playlistTracks, track]
+      }));
+    }
+  };
+
   render() {
     return (
       <div className="App">
         <SearchBar />
         <div className="App-playlist">
-          <SearchResults searchResults={this.state.searchResults} />
+          <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrackToPlaylist} />
           <Playlist playlistTracks={this.state.playlistTracks} />
         </div>
       </div>
