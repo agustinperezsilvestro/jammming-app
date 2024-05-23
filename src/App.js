@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import React, { Component } from 'react';
+import './App.css';
+import SearchBar from './SearchBar';
+import SearchResults from './SearchResults';
+import Playlist from './Playlist';
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      searchResults: [
+        { id: 1, name: 'Song1', artist: 'Artist1', album: 'Album1' },
+        { id: 2, name: 'Song2', artist: 'Artist2', album: 'Album2' }
+      ],
+      playlistTracks: [
+        { id: 3, name: 'PlaylistSong1', artist: 'PlaylistArtist1', album: 'PlaylistAlbum1' }
+      ]
+    };
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <SearchBar />
+        <div className="App-playlist">
+          <SearchResults searchResults={this.state.searchResults} />
+          <Playlist playlistTracks={this.state.playlistTracks} />
+        </div>
+      </div>
+    );
+  }
 }
 
 export default App;
