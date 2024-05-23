@@ -31,13 +31,20 @@ class App extends Component {
     }
   };
 
+  // Method to remove a track from the playlist
+  removeTrackFromPlaylist = (track) => {
+    this.setState((prevState) => ({
+      playlistTracks: prevState.playlistTracks.filter((playlistTrack) => playlistTrack.id !== track.id)
+    }));
+  };
+
   render() {
     return (
       <div className="App">
         <SearchBar />
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrackToPlaylist} />
-          <Playlist playlistTracks={this.state.playlistTracks} />
+          <Playlist playlistTracks={this.state.playlistTracks} onRemove={this.removeTrackFromPlaylist} />
         </div>
       </div>
     );
