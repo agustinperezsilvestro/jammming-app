@@ -10,7 +10,9 @@ class Tracklist extends Component {
           <Track
             key={track.id}
             track={track}
-            onAdd={this.props.onAdd}
+            onAddTrack={this.props.onAddTrack}
+            onRemoveTrack={this.props.onRemoveTrack}
+            isRemoval={this.props.isRemoval}
           />
         ))}
       </div>

@@ -4,14 +4,12 @@ import './Track.css';
 const Track = (props) => {
   const { name, artist, album } = props.track;
 
-  const handleAddClick = () => {
-    // Call the method to add the track to the custom playlist
-    props.onAddTrack(props.track);
-  };
-
-  const handleRemoveClick = () => {
-    // Call the method to remove the track from the custom playlist
-    props.onRemoveTrack(props.track);
+  const handleClick = () => {
+    if (props.isRemoval) {
+      props.onRemoveTrack(props.track);
+    } else {
+      props.onAddTrack(props.track);
+    }
   };
 
   return (
@@ -20,14 +18,13 @@ const Track = (props) => {
         <h3>{name}</h3>
         <p>{artist} | {album}</p>
       </div>
-      {props.isRemoval ? (
-        <button className="Track-action" onClick={handleRemoveClick}>-</button>
-      ) : (
-        <button className="Track-action" onClick={handleAddClick}>+</button>
-      )}
+      <button className="Track-action" onClick={handleClick}>
+        {props.isRemoval ? '-' : '+'}
+      </button>
     </div>
   );
-}
+};
 
 export default Track;
+
 

@@ -9,24 +9,21 @@ class App extends Component {
     super(props);
     this.state = {
       searchResults: [
-        { id: 1, name: 'Song1', artist: 'Artist1', album: 'Album1' },
-        { id: 2, name: 'Song2', artist: 'Artist2', album: 'Album2' }
+        { id: 1, name: 'Song1', artist: 'Artist1', album: 'Album1', uri: 'spotify:track:1' },
+        { id: 2, name: 'Song2', artist: 'Artist2', album: 'Album2', uri: 'spotify:track:2' }
       ],
-      playlistName: 'New Playlist',
       playlistTracks: [
-        { id: 3, name: 'PlaylistSong1', artist: 'PlaylistArtist1', album: 'PlaylistAlbum1' }
-      ]
+        { id: 3, name: 'PlaylistSong1', artist: 'PlaylistArtist1', album: 'PlaylistAlbum1', uri: 'spotify:track:3' }
+      ],
+      playlistName: 'New Playlist'
     };
   }
 
   // Method to add a selected song from search results to playlist
   addTrackToPlaylist = (track) => {
-    // Check if the track is already in the playlist
-    const isTrackInPlaylist = this.state.playlistTracks.some((playlistTrack) => playlistTrack.id === track.id);
-    
-    // If the track is not already in the playlist, add it
+    const isTrackInPlaylist = this.state.playlistTracks.some(playlistTrack => playlistTrack.id === track.id);
     if (!isTrackInPlaylist) {
-      this.setState((prevState) => ({
+      this.setState(prevState => ({
         playlistTracks: [...prevState.playlistTracks, track]
       }));
     }
@@ -34,14 +31,26 @@ class App extends Component {
 
   // Method to remove a selected song from the playlist
   removeTrackFromPlaylist = (track) => {
-    this.setState((prevState) => ({
-      playlistTracks: prevState.playlistTracks.filter((playlistTrack) => playlistTrack.id !== track.id)
+    this.setState(prevState => ({
+      playlistTracks: prevState.playlistTracks.filter(playlistTrack => playlistTrack.id !== track.id)
     }));
   };
 
-  // Method to update the playlist name
+  // Method to change the playlist name
   updatePlaylistName = (name) => {
     this.setState({ playlistName: name });
+  };
+
+  // Method to save the playlist
+  savePlaylist = () => {
+    const trackUris = this.state.playlistTracks.map(track => track.uri);
+    const playlistName = this.state.playlistName;
+
+    // Mock saving the playlist
+    console.log(`Saving playlist "${playlistName}" with tracks:`, trackUris);
+
+    // Reset the playlist after saving
+    this.setState({ playlistTracks: [], playlistName: 'New Playlist' });
   };
 
   render() {
@@ -51,10 +60,11 @@ class App extends Component {
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrackToPlaylist} />
           <Playlist
-            playlistName={this.state.playlistName}
             playlistTracks={this.state.playlistTracks}
+            playlistName={this.state.playlistName}
             onRemove={this.removeTrackFromPlaylist}
             onNameChange={this.updatePlaylistName}
+            onSave={this.savePlaylist}
           />
         </div>
       </div>
