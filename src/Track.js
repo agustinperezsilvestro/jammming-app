@@ -4,12 +4,12 @@ import './Track.css';
 const Track = (props) => {
   const { name, artist, album } = props.track;
 
-  const handleClick = () => {
-    if (props.isRemoval) {
-      props.onRemoveTrack(props.track);
-    } else {
-      props.onAddTrack(props.track);
-    }
+  const handleAddClick = () => {
+    props.onAddTrack(props.track);
+  };
+
+  const handleRemoveClick = () => {
+    props.onRemoveTrack(props.track);
   };
 
   return (
@@ -18,13 +18,14 @@ const Track = (props) => {
         <h3>{name}</h3>
         <p>{artist} | {album}</p>
       </div>
-      <button className="Track-action" onClick={handleClick}>
-        {props.isRemoval ? '-' : '+'}
-      </button>
+      {props.isRemoval ? (
+        <button className="Track-action" onClick={handleRemoveClick}>-</button>
+      ) : (
+        <button className="Track-action" onClick={handleAddClick}>+</button>
+      )}
     </div>
   );
-};
+}
 
 export default Track;
-
 
