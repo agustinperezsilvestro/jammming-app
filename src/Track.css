@@ -1,0 +1,30 @@
+.Track {
+    background-color: purple;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .Track:hover {
+    transform: translateY(-5px);
+  }
+  
+  .Track-information h3 {
+    margin-bottom: 10px;
+  }
+  
+  .Track-action {
+    background-color: var(green);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
+  .Track-action:hover {
+    background-color: var(black);
+  }
