@@ -50,11 +50,15 @@ class App extends Component {
   // Method to save the playlist to Spotify
   savePlaylist = () => {
     const trackUris = this.state.playlistTracks.map(track => track.uri);
-    Spotify.savePlaylist(this.state.playlistName, trackUris).then(() => {
+    const playlistName = this.state.playlistName;
+    Spotify.savePlaylist(playlistName, trackUris).then(() => {
+      // Reset the playlist name and tracks after saving
       this.setState({
         playlistName: 'New Playlist',
         playlistTracks: []
       });
+      // Clear the search results after saving
+      this.setState({ searchResults: [] });
     });
   };
 

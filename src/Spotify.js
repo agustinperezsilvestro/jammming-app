@@ -50,6 +50,40 @@ const Spotify = {
         uri: track.uri
       }));
     });
+  },
+
+  // Method to save the playlist to Spotify
+  savePlaylist(playlistName, trackUris) {
+    if (!playlistName || !trackUris.length) {
+      return;
+    }
+
+    const accessToken = Spotify.getAccessToken();
+    const headers = { Authorization: `Bearer ${accessToken}` };
+    let userId;
+
+    // Get the user's ID
+    return fetch('https://api.spotify.com/v1/me', { headers: headers })
+      .then(response => response.json())
+      .then(jsonResponse => {
+        userId = jsonResponse.id;
+        // Create a new playlist
+        return fetch(`https://api.spotify.com/v1/users/${userId}/playlists`, {
+          headers: headers,
+          method: 'POST',
+          body: JSON.stringify({ name: playlistName })
+        })
+          .then(response => response.json())
+          .then(jsonResponse => {
+            const playlistId = jsonResponse.id;
+            // Add tracks to the playlist
+            return fetch(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
+              headers: headers,
+              method: 'POST',
+              body: JSON.stringify({ uris: trackUris })
+            });
+          });
+      });
   }
 };
 
