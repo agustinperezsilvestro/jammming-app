@@ -3,17 +3,22 @@ import './Playlist.css';
 import Tracklist from './TrackList.js'; // Import Tracklist component
 
 class Playlist extends Component {
-  // Method to handle removing a track from the playlist
-  removeTrack = (track) => {
-    this.props.onRemove(track); // Call the onRemove function passed down from App.js
+  handleNameChange = (event) => {
+    this.props.onNameChange(event.target.value);
   };
 
   render() {
     return (
       <div className="Playlist">
-        <input defaultValue={"New Playlist"} />
-        {/* Pass the removeTrack method down to the Tracklist component */}
-        <Tracklist tracks={this.props.playlistTracks} onRemove={this.removeTrack} />
+        <input
+          value={this.props.playlistName}
+          onChange={this.handleNameChange}
+        />
+        <Tracklist
+          tracks={this.props.playlistTracks}
+          onRemove={this.props.onRemove}
+          isRemoval={true}
+        />
         <button className="Playlist-save">SAVE TO SPOTIFY</button>
       </div>
     );

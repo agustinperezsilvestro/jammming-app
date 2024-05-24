@@ -12,6 +12,7 @@ class App extends Component {
         { id: 1, name: 'Song1', artist: 'Artist1', album: 'Album1' },
         { id: 2, name: 'Song2', artist: 'Artist2', album: 'Album2' }
       ],
+      playlistName: 'New Playlist',
       playlistTracks: [
         { id: 3, name: 'PlaylistSong1', artist: 'PlaylistArtist1', album: 'PlaylistAlbum1' }
       ]
@@ -31,11 +32,16 @@ class App extends Component {
     }
   };
 
-  // Method to remove a track from the playlist
+  // Method to remove a selected song from the playlist
   removeTrackFromPlaylist = (track) => {
     this.setState((prevState) => ({
       playlistTracks: prevState.playlistTracks.filter((playlistTrack) => playlistTrack.id !== track.id)
     }));
+  };
+
+  // Method to update the playlist name
+  updatePlaylistName = (name) => {
+    this.setState({ playlistName: name });
   };
 
   render() {
@@ -44,7 +50,12 @@ class App extends Component {
         <SearchBar />
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrackToPlaylist} />
-          <Playlist playlistTracks={this.state.playlistTracks} onRemove={this.removeTrackFromPlaylist} />
+          <Playlist
+            playlistName={this.state.playlistName}
+            playlistTracks={this.state.playlistTracks}
+            onRemove={this.removeTrackFromPlaylist}
+            onNameChange={this.updatePlaylistName}
+          />
         </div>
       </div>
     );
