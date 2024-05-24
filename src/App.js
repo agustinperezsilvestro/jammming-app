@@ -9,14 +9,9 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchResults: [
-        { id: 1, name: 'Song1', artist: 'Artist1', album: 'Album1' },
-        { id: 2, name: 'Song2', artist: 'Artist2', album: 'Album2' }
-      ],
+      searchResults: [],
       playlistName: 'New Playlist',
-      playlistTracks: [
-        { id: 3, name: 'PlaylistSong1', artist: 'PlaylistArtist1', album: 'PlaylistAlbum1' }
-      ]
+      playlistTracks: []
     };
   }
 
@@ -45,6 +40,13 @@ class App extends Component {
     this.setState({ playlistName: name });
   };
 
+  // Method to search for tracks using the Spotify API
+  search = (term) => {
+    Spotify.search(term).then(searchResults => {
+      this.setState({ searchResults: searchResults });
+    });
+  };
+
   // Method to save the playlist to Spotify
   savePlaylist = () => {
     const trackUris = this.state.playlistTracks.map(track => track.uri);
@@ -59,7 +61,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <SearchBar />
+        <SearchBar onSearch={this.search} />
         <div className="App-playlist">
           <SearchResults searchResults={this.state.searchResults} onAdd={this.addTrackToPlaylist} />
           <Playlist 
